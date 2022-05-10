@@ -10,7 +10,7 @@ const Calendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     return(
-        <>
+        <div className='calendar'>
             <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
                 <CalendarPicker 
                     onChange={(value) => {setSelectedDate(value)}}
@@ -34,7 +34,7 @@ const Calendar = () => {
                     }
                 />
             </LocalizationProvider>
-        </>
+        </div>
     );
 };
 
