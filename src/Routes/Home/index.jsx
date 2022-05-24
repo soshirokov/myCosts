@@ -2,27 +2,29 @@ import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import { Calendar } from '../../Components/Calendar';
 import { CostForm } from '../../Components/CostForm';
+import { CostStats } from '../../Components/CostStats';
 
 const Home = () => {
     return (
         <div className='home'>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
+            <Grid container columnSpacing={{ xs: 0, sm: 4, md: 8 }} rowSpacing={1} p={4}>
+                <Grid item sm={3} xs={12}>
                     <Typography variant="h6" component="h6">
-                        Выбрать день
+                        Дата
                     </Typography>
                     <Calendar/>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item sm={4} xs={12}>
                     <Typography variant="h6" component="h6">
-                        Внести расходы
+                        Расходы
                     </Typography>
                     <CostForm/>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item sm={5} xs={12}>
                     <Typography variant="h6" component="h6">
-                        Статистика за текущий месяц
+                        Статистика
                     </Typography>
+                    <CostStats/>
                 </Grid>
             </Grid>
             

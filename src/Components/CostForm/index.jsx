@@ -1,42 +1,91 @@
-import { Button, FormControl, TextField } from '@mui/material';
-import { set } from 'firebase/database';
-import React, { useState } from 'react';
+import { FormControl, TextField } from '@mui/material';
+import { onValue, set } from 'firebase/database';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { categories } from '../../Constants/costCategories';
-import { auth, saveCostRef } from '../../Helpers/Firebase';
+import { auth, costByDateDetailsRef, costByDateRef } from '../../Helpers/Firebase';
+import { getDateFromString } from '../../Helpers/Utils/dateFormat';
+import { selectedDateStringSelector } from '../../Store/Calendar/selectors';
 
 const CostForm = () => {
-    const startCosts = {};
-    categories.forEach((category) => {
-        startCosts[category] = 0;
-    });
-    const [costs, setCosts] = useState(startCosts);
+    const [costs, setCosts] = useState(categories);
+
+    const selectedDate = useSelector(selectedDateStringSelector);
+
+    useEffect(() => {
+        if (auth?.currentUser?.uid) {
+            onValue(costByDateDetailsRef(auth.currentUser.uid, selectedDate), (snapshot) => {
+                setCosts({...categories, ...snapshot.val()});
+            });
+        }
+    }, [selectedDate]);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        set(saveCostRef(auth.currentUser.uid, '01-01-2001'), costs);
+    };
+
+    const inputHandler = (e, category) => {
+        e.target.value = e.target.value.replace(/[^0-9+-]/g, '').replace('++', '+').replace('--', '-');
+        if (+e.target.value === 0) {e.target.value = '';}
+
+        setCosts((prevState) => ({
+            ...prevState,
+            [category]: e.target.value
+        }));
+    };
+
+    const blurHandler = (e, category) => {
+        if (e.target.value !== '') {
+            // eslint-disable-next-line
+            const newCosts = {...costs, [category]: eval(e.target.value)};
+
+            setCosts(newCosts);
+            saveCostsToFirebase(newCosts);
+        }
+    };
+
+    const keyDowHandler = (e) => {
+        if(e.keyCode === 13) {
+            e.target.blur()
+        }
+    };
+
+    const saveCostsToFirebase = (costsToSave) => {
+        const info = {
+            total: 0,
+            d: getDateFromString(selectedDate).getDate(),
+            m: getDateFromString(selectedDate).getMonth()+1,
+            y: getDateFromString(selectedDate).getFullYear()
+        };
+
+        for (let prop in costsToSave) {
+            if (costsToSave[prop] === '') { costsToSave[prop] = 0; }
+            else { info.total += +costsToSave[prop]; }
+        }
+
+        set(costByDateRef(auth.currentUser.uid, selectedDate), {...info, details: costsToSave });
     };
 
     return(
         <div className='costForm'>
             <form action='' onSubmit={submitHandler}>
-                <FormControl fullWidth sx={{m:1}}>
                     {
-                        categories.map((category) => 
-                            <TextField 
-                                sx={{mb:3}} 
-                                label={category} 
-                                value={costs[category]} 
-                                type='text' 
-                                variant='standard' 
-                                key={category} 
-                                onChange={(e) => {setCosts({...costs, [category]: e.target.value})}}
+                        Object.keys(categories).map((category) => 
+                            <FormControl fullWidth sx={{my:1}} key={category}>
+                                <TextField 
+                                    label={category} 
+                                    value={costs[category] || ''} 
+                                    type='text' 
+                                    variant='filled' 
+                                    size='small'
+                                    key={category} 
+                                    onChange={(e) => {inputHandler(e, category)}}
+                                    onKeyDown={keyDowHandler}
+                                    onBlur={(e) => {blurHandler(e, category)}}
                             />
+                        </FormControl>
                         )
                     }
-                </FormControl>
-                <FormControl fullWidth sx={{m:1}}>
-                    <Button type='submit' variant="contained">Сохранить</Button>
-                </FormControl>
             </form>
         </div>
     );
