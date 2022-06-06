@@ -1,0 +1,14 @@
+.MuiButtonBase-root.MuiPickersDay-root {
+    font-weight: 400;
+    color: #6d6d6d;
+
+    &.currentMonth {
+        font-weight: 600;
+        color: #030303;
+    }
+
+    &.Mui-selected, &.Mui-selected:hover {
+        color: #ffffff;
+        background-color: #b918ff;
+    }
+}
