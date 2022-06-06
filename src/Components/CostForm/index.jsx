@@ -35,13 +35,15 @@ const CostForm = () => {
     };
 
     const blurHandler = (e, category) => {
-        if (e.target.value !== '') {
-            // eslint-disable-next-line
-            const newCosts = {...costs, [category]: eval(e.target.value)};
+        e.target.value = /[0-9]/g.test(e.target.value.slice(-1)) ? e.target.value : e.target.value + '0';
 
-            setCosts(newCosts);
-            saveCostsToFirebase(newCosts);
-        }
+        // eslint-disable-next-line
+        const toSave =  e.target.value ? eval(e.target.value) : '';
+
+        const newCosts = {...costs, [category]: toSave};
+
+        setCosts(newCosts);
+        saveCostsToFirebase(newCosts);
     };
 
     const keyDowHandler = (e) => {
@@ -82,8 +84,8 @@ const CostForm = () => {
                                     onChange={(e) => {inputHandler(e, category)}}
                                     onKeyDown={keyDowHandler}
                                     onBlur={(e) => {blurHandler(e, category)}}
-                            />
-                        </FormControl>
+                                />
+                            </FormControl>
                         )
                     }
             </form>

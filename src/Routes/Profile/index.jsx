@@ -1,8 +1,11 @@
 import React from 'react';
+import { ProfileSettings } from '../../Components/ProfileSettings';
 
 const Profile = () => {
     return (
-        <div className='profile'>Profile</div>
+        <div className='profile'>
+            <ProfileSettings />
+        </div>
     );
 };
 
