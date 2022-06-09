@@ -2,22 +2,21 @@ import { Grid } from '@mui/material';
 import { Calendar } from '../../Components/Calendar';
 import { CostForm } from '../../Components/CostForm';
 import { CostStats } from '../../Components/CostStats';
-import { equalTo, onValue, orderByChild, query } from 'firebase/database';
+import { equalTo, limitToFirst, onValue, orderByChild, query } from 'firebase/database';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { auth, costByUserRef, costLevelRef } from '../../Helpers/Firebase';
-import { getDateFromString } from '../../Helpers/Utils/dateFormat';
-import { selectedDateStringSelector } from '../../Store/Calendar/selectors';
+import { selectedDateSelector } from '../../Store/Calendar/selectors';
 import { CostTotal } from '../../Components/CostTotal';
 
 const Home = () => {
     const [stats, setStats] = useState({});
     const [costLevel, setCostLevel] = useState();
-    const selectedDate = useSelector(selectedDateStringSelector);
+    const selectedDate = useSelector(selectedDateSelector);
 
     useEffect(() => {
         if (auth?.currentUser?.uid) {
-            const myQuery = query(costByUserRef(auth.currentUser.uid), orderByChild('m'), equalTo(getDateFromString(selectedDate).getMonth() + 1));
+            const myQuery = query(costByUserRef(auth.currentUser.uid), orderByChild('m'), equalTo(selectedDate.getMonth() + 1), limitToFirst((new Date()).getDate()));
 
             onValue(myQuery, snapshot => setStats(snapshot.val() || {}))
         }

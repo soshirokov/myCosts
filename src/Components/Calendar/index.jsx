@@ -9,9 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setDate } from '../../Store/Calendar/actions';
 import { selectedDateSelector } from '../../Store/Calendar/selectors';
 import { getStringFromDate } from '../../Helpers/Utils/dateFormat';
-import { Button, FormControl } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import { format } from 'date-fns';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
 
 const Calendar = () => {
     const selectedDate = useSelector(selectedDateSelector);
@@ -28,18 +31,32 @@ const Calendar = () => {
         else {setShowCal('none');}
     }
 
+    const increaseDate = () => {
+        const dateToStore = getStringFromDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1));
+        dispatch(setDate(dateToStore));
+    }
+
+    const decreaseDate = () => {
+        const dateToStore = getStringFromDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() - 1));
+        dispatch(setDate(dateToStore));
+    }
+
     return(
         <div className='calendar'>
             <Box display={{xs: 'block', sm: 'none'}}>
-                <FormControl fullWidth>
-                    <Button 
-                        variant="text" 
-                        sx={{fontWeight: 'bold', fontSize: '18px'}}
-                        onClick={showCalendar}
-                    >
-                        {format(selectedDate, 'dd.MM.yyyy')}
-                    </Button>
-                </FormControl>
+                <Grid container justifyContent="space-between" alignItems="center">
+                    <Grid item><ChevronLeftIcon sx={{top: '4px', position: 'relative', cursor: 'pointer'}} onClick={decreaseDate}/></Grid>
+                    <Grid item>
+                        <Button 
+                            variant="text" 
+                            sx={{fontWeight: 'bold', fontSize: '18px'}}
+                            onClick={showCalendar}
+                        >
+                            {format(selectedDate, 'dd.MM.yyyy')}
+                        </Button>
+                    </Grid>
+                    <Grid item><ChevronRightIcon sx={{top: '4px', position: 'relative', cursor: 'pointer'}} onClick={increaseDate}/></Grid>
+                </Grid>
             </Box>
             <Box display={{xs: showCal, sm: 'block'}}>
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>

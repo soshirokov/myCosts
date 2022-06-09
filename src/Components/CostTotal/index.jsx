@@ -10,6 +10,8 @@ const CostTotal = ( { stats, costLevel } ) => {
     const selectedDate = useSelector(selectedDateSelector);
     const daysInCurrentMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate();
 
+    console.log(selectedDate,stats );
+
     const getStatsTotal = () => {
         return Object.keys(stats).length > 0 ? Object.keys(stats).reduce((total, key) => total + +stats[key].total, 0) : 0;
     }
@@ -44,8 +46,8 @@ const CostTotal = ( { stats, costLevel } ) => {
                     <Typography fontSize={16} fontWeight={600}>
                         {getStatsAverage().toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}
                         {costLevel && (getCostLevelAverage() > getStatsAverage() ? 
-                            <Typography variant="span" sx={{color: '#17d34acf', fontSize: '12px'}}><ArrowDropDownIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(getCostLevelAverage() - getStatsAverage()).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography> : 
-                            <Typography variant="span" sx={{color: '#eb3030d2', fontSize: '12px'}}><ArrowDropUpIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(getStatsAverage() - getCostLevelAverage()).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography>
+                            <Typography variant="span" sx={{color: '#17d34acf', fontSize: '12px'}} noWrap={true}><ArrowDropDownIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(getCostLevelAverage() - getStatsAverage()).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography> : 
+                            <Typography variant="span" sx={{color: '#eb3030d2', fontSize: '12px'}} noWrap={true}><ArrowDropUpIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(getStatsAverage() - getCostLevelAverage()).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography>
                         )}
                     </Typography>
                 </Grid>
@@ -58,8 +60,8 @@ const CostTotal = ( { stats, costLevel } ) => {
                     <Typography fontSize={16} fontWeight={600}>
                         {getForecastTotal().toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}
                         {costLevel && (+costLevel > getForecastTotal() ? 
-                            <Typography variant="span" sx={{color: '#17d34acf', fontSize: '12px'}}><ArrowDropDownIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(+costLevel - getForecastTotal()).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography> : 
-                            <Typography variant="span" sx={{color: '#eb3030d2', fontSize: '12px'}}><ArrowDropUpIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(getForecastTotal() - costLevel).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography>
+                            <Typography variant="span" sx={{color: '#17d34acf', fontSize: '12px'}} noWrap={true}><ArrowDropDownIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(+costLevel - getForecastTotal()).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography> : 
+                            <Typography variant="span" sx={{color: '#eb3030d2', fontSize: '12px'}} noWrap={true}><ArrowDropUpIcon sx={{top: '4px', position: 'relative', fontSize: '16px'}} />{(getForecastTotal() - costLevel).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</Typography>
                         )}
                     </Typography>
                 </Grid>

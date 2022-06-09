@@ -15,6 +15,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Link } from 'react-router-dom';
+import { logout } from '../../Helpers/Firebase';
 
 const drawerWidth = 240;
 
@@ -117,6 +118,18 @@ export default function PersistentDrawerLeft( props ) {
           {props.menu.map(menuItem => 
             <Link to={menuItem.link} key={menuItem.title}><ListItem><ListItemButton>{menuItem.title}</ListItemButton></ListItem></Link>
           )}
+          <ListItem>
+            <ListItemButton onClick={ 
+              async () => {
+                try {
+                  await logout();
+                } catch(e) {
+                  console.warn(e);
+                }
+              }}>
+              Logout
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
       <Main open={open}>

@@ -11,10 +11,6 @@ const StatsLineChart = ({ costs }) => {
     const daysOfSelectedMonth = Array.from({length: lastDayToDisplay}, (v, k) => getStringFromDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), k + 1)));
 
     const settings = {
-        chart: {
-            width: "100%",
-            height: 380,
-        },
         options: {
             xaxis: {
               categories: daysOfSelectedMonth
@@ -24,8 +20,8 @@ const StatsLineChart = ({ costs }) => {
             },
             chart: {
                 toolbar: {
-                    show: false
-                }
+                    show: false,
+                },
             },
             dataLabels: {
                 enabled: false
@@ -46,7 +42,9 @@ const StatsLineChart = ({ costs }) => {
 
     return(<>
         <Chart 
-            type="area" 
+            type='area'
+            width='100%'
+            height='350px'
             options={settings.options}
             series={settings.series}
         />
