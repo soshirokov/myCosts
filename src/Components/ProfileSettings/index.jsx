@@ -1,14 +1,13 @@
 import { FormControl, Grid, TextField, Typography } from '@mui/material';
 import { onValue, set } from 'firebase/database';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { auth, costLevelRef } from '../../Helpers/Firebase';
-import { selectedDateSelector } from '../../Store/Calendar/selectors';
+import { lastDayOfMonth } from '../../Helpers/Utils/lastDayOfMonth';
 
 const ProfileSettings = () => {
-    const [costLevel, setCostLevel] = useState('');
-    const selectedDate = useSelector(selectedDateSelector);
-    const daysInCurrentMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate();
+    const [costLevel, setCostLevel] = useState('')
+    const today = new Date()
+    const daysInCurrentMonth = lastDayOfMonth(today)
 
     useEffect(() => {
         if (auth?.currentUser?.uid) {

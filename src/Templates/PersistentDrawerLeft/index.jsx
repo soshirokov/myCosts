@@ -79,7 +79,7 @@ export default function PersistentDrawerLeft( props ) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{backgroundColor: '#3f2aff'}}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -108,7 +108,7 @@ export default function PersistentDrawerLeft( props ) {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
+        <DrawerHeader >
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -132,7 +132,7 @@ export default function PersistentDrawerLeft( props ) {
           </ListItem>
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main open={open} >
         <DrawerHeader />
             {props.children}
       </Main>

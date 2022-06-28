@@ -20,8 +20,8 @@ const StatsPieChart = ({ costs }) => {
           labels: sortedCosts.map(cost => cost.category),
           legend: {
               show: false
-          },
-          colors: ['#9b5de5', '#f15bb5', '#fee440', '#00bbf9', '#00f5d4', '#e63946', '#0077b6', '#ffbe0b', '#118ab2', '#7400b8', '#4ea8de', '#72efdd', '#f72585', '#7209b7', '#4361ee', '#f95738'].sort(),
+            },
+          colors: ['rgba(63, 42, 255, 1)', 'rgba(63, 42, 255, 0.95)', 'rgba(63, 42, 255, 0.9)', 'rgba(63, 42, 255, 0.85)', 'rgba(63, 42, 255, 0.8)', 'rgba(63, 42, 255, 0.75)', 'rgba(63, 42, 255, 0.7)', 'rgba(63, 42, 255, 0.65)', 'rgba(63, 42, 255, 0.6)', 'rgba(63, 42, 255, 0.55)', 'rgba(63, 42, 255, 0.5)', 'rgba(63, 42, 255, 0.45)', 'rgba(63, 42, 255, 0.4)', 'rgba(63, 42, 255, 0.35)', 'rgba(63, 42, 255, 0.3)', 'rgba(63, 42, 255, 0.25)'],
           tooltip: {
             enabled: false,
           },
@@ -33,6 +33,9 @@ const StatsPieChart = ({ costs }) => {
                 donut: {
                     labels: {
                         show: true,
+                        name: {
+                            color: '#3f2aff',
+                        },
                         value: {
                             fontSize: '16px',
                             formatter: function (val) {

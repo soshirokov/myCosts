@@ -16,7 +16,7 @@ const StatsLineChart = ({ costs }) => {
               categories: daysOfSelectedMonth
             },
             stroke: {
-                width: 2
+                width: 2,
             },
             chart: {
                 toolbar: {
@@ -30,7 +30,8 @@ const StatsLineChart = ({ costs }) => {
                 y: {
                     formatter: (val) => (+val).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' }),
                 },
-            }
+            },
+            colors: ['#3f2aff']
           },
           series: [
             {

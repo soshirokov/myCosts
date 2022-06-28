@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { auth, costByUserRef, costLevelRef } from '../../Helpers/Firebase';
 import { selectedDateSelector } from '../../Store/Calendar/selectors';
 import { CostTotal } from '../../Components/CostTotal';
+import { lastDayOfMonth } from '../../Helpers/Utils/lastDayOfMonth';
 
 const Home = () => {
     const [stats, setStats] = useState({});
@@ -16,7 +17,12 @@ const Home = () => {
 
     useEffect(() => {
         if (auth?.currentUser?.uid) {
-            const myQuery = query(costByUserRef(auth.currentUser.uid), orderByChild('m'), equalTo(selectedDate.getMonth() + 1), limitToFirst((new Date()).getDate()));
+            const today = new Date()
+            const lastDayOfStats = selectedDate.getMonth() < today.getMonth() && selectedDate.getFullYear() <= today.getFullYear()
+                ? lastDayOfMonth(selectedDate)
+                : today.getDate()
+
+            const myQuery = query(costByUserRef(auth.currentUser.uid), orderByChild('m'), equalTo(selectedDate.getMonth() + 1), limitToFirst(lastDayOfStats));
 
             onValue(myQuery, snapshot => setStats(snapshot.val() || {}))
         }
