@@ -65,14 +65,14 @@ const Calendar = () => {
                         renderDay={(day) => {
                             
                             let dayClass = '';
-                            if (day.getMonth() === (new Date()).getMonth()) {
+                            if (day.getMonth() === selectedDate.getMonth()) {
                                 dayClass += "currentMonth";
                             }
 
                             return(<PickersDay 
                                 day={day} 
                                 outsideCurrentMonth={true} 
-                                key={day} 
+                                key={day}
                                 className={dayClass}
                                 onDaySelect={dayChangeHandler}
                                 selected={isSameDate(day, selectedDate)}

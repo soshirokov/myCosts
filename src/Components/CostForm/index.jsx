@@ -57,7 +57,8 @@ const CostForm = () => {
             total: 0,
             d: getDateFromString(selectedDate).getDate(),
             m: getDateFromString(selectedDate).getMonth()+1,
-            y: getDateFromString(selectedDate).getFullYear()
+            y: getDateFromString(selectedDate).getFullYear(),
+            dateTime: getDateFromString(selectedDate).getTime()
         };
 
         for (let prop in costsToSave) {

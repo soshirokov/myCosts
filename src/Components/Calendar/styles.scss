@@ -1,6 +1,13 @@
+.calendar {
+    max-width: 100%;
+    overflow: hidden;
+}
+
 .MuiButtonBase-root.MuiPickersDay-root {
     font-weight: 400;
     color: #6d6d6d;
+    width: 34px;
+    height: 34px;
 
     &.currentMonth {
         font-weight: 600;
@@ -11,4 +18,9 @@
         color: #ffffff;
         background-color: #3f2aff;
     }
+}
+
+.MuiTypography-root.MuiTypography-caption {
+    width: 34px;
+    height: 38px;
 }

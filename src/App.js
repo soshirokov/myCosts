@@ -12,12 +12,14 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Helpers/Firebase';
 import PersistentDrawerLeft from './Templates/PersistentDrawerLeft';
+import { StatsPage } from './Routes/StatsPage';
 
 function App() {
   const [authed, setAuthed] = useState(false);
   const [onAuth, setOnAuth] = useState(false);
   const menu = [
-    {title: 'Home', link: '/'},
+    { title: 'Home', link: '/' },
+    {title: 'Stats', link: '/stats'},
     {title: 'Pofile', link: '/profile'}
   ];
 
@@ -51,6 +53,9 @@ function App() {
             </Route>
             <Route path="/login" element={<Login authed={authed}/>}>
               <Route path="redirect/:redirect" element={<Login authed={authed}/>} />
+            </Route>
+            <Route path="/stats" element={<PrivateRoute authed={authed} path="stats"/>}>
+              <Route path="" element={<StatsPage />} />
             </Route>
           </Routes>
         }

@@ -10,7 +10,7 @@ const CostStats = ({ stats }) => {
                 {Object.keys(stats).length ? <StatsPieChart costs={stats}/> : "Не было расходов"}
             </Box>
             <Box>
-                {Object.keys(stats).length ? <StatsLineChart costs={stats}/> : "Не было расходов"}
+                {Object.keys(stats).length ? <StatsLineChart costs={stats} inMonth/> : "Не было расходов"}
             </Box>
         </div>
     );

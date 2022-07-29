@@ -38,7 +38,9 @@ const ProfileSettings = () => {
             <Grid item sm={4} xs={12}>
             </Grid>
             <Grid item sm={4} xs={12}>
-                <Typography fontSize={12}>Твой ID:</Typography>
+                <Typography fontSize={12}>Your Email:</Typography>
+                <Typography fontSize={16} fontWeight={600} marginBottom={2}>{auth?.currentUser?.email}</Typography>
+                <Typography fontSize={12}>Your ID:</Typography>
                 <Typography fontSize={16} fontWeight={600}>{auth?.currentUser?.uid}</Typography>
                 <FormControl fullWidth sx={{my:3}}>
                     <TextField 
